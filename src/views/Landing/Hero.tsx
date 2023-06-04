@@ -7,14 +7,17 @@ import {
   Image,
   Spinner,
   Box,
+  Icon,
 } from "@chakra-ui/react";
+import { ChevronDownIcon } from "@chakra-ui/icons";
 import { useNavigate } from "react-router-dom";
 
 export const Hero: React.FC = () => {
   const navigate = useNavigate();
 
   return (
-    <Container maxW={"5xl"} height={"90vh"}>
+    <Container maxW={"5xl"} height={"100vh"} position={"relative"}>
+      {" "}
       <Stack
         textAlign={"center"}
         align={"center"}
@@ -65,6 +68,32 @@ export const Hero: React.FC = () => {
           />
         </Box>
       </Stack>
+      <Box
+        color={"gray.600"}
+        px={2}
+        width={"100%"}
+        display={"flex"}
+        flexDir={"column"}
+        justifyContent={"center"}
+        alignItems={"center"}
+      >
+        <Icon
+          as={ChevronDownIcon}
+          boxSize={10}
+          cursor={"pointer"}
+          transition={".3s ease"}
+          onClick={() => {
+            window.scrollTo({
+              top: 1000,
+              behavior: "smooth",
+            });
+          }}
+          _hover={{
+            boxSize: 12,
+          }}
+        />
+        <Text>Scroll Down</Text>
+      </Box>
     </Container>
   );
 };
