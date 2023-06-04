@@ -1,4 +1,4 @@
-import { Box, Heading, Text, Button } from "@chakra-ui/react";
+import { Box, Heading, Text, Button, Image, Flex } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
 
 export const PageNotFound = () => {
@@ -21,7 +21,9 @@ export const PageNotFound = () => {
       <Text color={"gray.500"} mb={6}>
         The page you're looking for does not seem to exist
       </Text>
-
+      <Flex width={"100%"} justifyContent={"center"} mb={2}>
+        <Image src={"/not-found.png"} width={"400px"} />
+      </Flex>
       <Button
         colorScheme="orange"
         bgGradient="linear(to-r, orange.400, orange.500, orange.600)"

@@ -8,10 +8,13 @@ import {
   Spinner,
   Box,
 } from "@chakra-ui/react";
+import { useNavigate } from "react-router-dom";
 
 export const Hero: React.FC = () => {
+  const navigate = useNavigate();
+
   return (
-    <Container maxW={"5xl"}>
+    <Container maxW={"5xl"} height={"90vh"}>
       <Stack
         textAlign={"center"}
         align={"center"}
@@ -44,7 +47,13 @@ export const Hero: React.FC = () => {
           >
             Get started
           </Button>
-          <Button rounded={"full"} px={6}>
+          <Button
+            rounded={"full"}
+            px={6}
+            onClick={() => {
+              navigate("/about");
+            }}
+          >
             Learn more
           </Button>
         </Stack>
