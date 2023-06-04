@@ -8,7 +8,7 @@ import WithSubnavigation from "./components/Navbar.tsx";
 import Landing from "./views/Landing";
 import About from "./views/About";
 
-const Layout = () => {
+export const Layout = () => {
   return (
     <>
       <WithSubnavigation />

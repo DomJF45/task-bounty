@@ -13,7 +13,7 @@ import { CheckIcon } from "@chakra-ui/icons";
 
 const Features: React.FC = () => {
   return (
-    <Box p={4} height={"100vh"}>
+    <Box p={4} mt={20} height={"100vh"}>
       <Stack spacing={4} as={Container} maxW={"3xl"} textAlign={"center"}>
         <Heading fontSize={"3xl"}>Unlock the Power of Task Bounty</Heading>
         <Text color={"gray.600"} fontSize={"xl"}>
