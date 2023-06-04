@@ -91,6 +91,7 @@ const DesktopNav = () => {
   const linkColor = useColorModeValue("gray.600", "gray.200");
   const linkHoverColor = useColorModeValue("gray.800", "white");
   const popoverContentBgColor = useColorModeValue("white", "gray.800");
+  const navigate = useNavigate();
 
   return (
     <Stack direction={"row"} spacing={4} alignItems={"baseline"}>
@@ -100,10 +101,10 @@ const DesktopNav = () => {
             <PopoverTrigger>
               <Link
                 p={2}
-                href={navItem.href ?? "#"}
                 fontSize={"sm"}
                 fontWeight={500}
                 color={linkColor}
+                onClick={() => navigate(navItem.href ?? "/")}
                 _hover={{
                   textDecoration: "none",
                   color: linkHoverColor,
