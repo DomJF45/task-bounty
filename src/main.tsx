@@ -7,6 +7,7 @@ import { PageNotFound } from "./components/PageNotFound.tsx";
 import WithSubnavigation from "./components/Navbar.tsx";
 import Landing from "./views/Landing";
 import About from "./views/About";
+import Who from "./views/Who/index.tsx";
 
 export const Layout = () => {
   return (
@@ -29,6 +30,10 @@ const router = createBrowserRouter([
       {
         path: "/about",
         element: <About />,
+      },
+      {
+        path: "/who",
+        element: <Who />,
       },
     ],
     errorElement: <PageNotFound />,

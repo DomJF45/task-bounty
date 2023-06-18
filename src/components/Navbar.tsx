@@ -264,4 +264,8 @@ const NAV_ITEMS: Array<NavItem> = [
       },
     ],
   },
+  {
+    label: "Who Task Bounty is For",
+    href: "/who",
+  },
 ];
