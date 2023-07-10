@@ -4,16 +4,41 @@ import { ChakraProvider, ColorModeScript } from "@chakra-ui/react";
 import { createBrowserRouter, Outlet, RouterProvider } from "react-router-dom";
 import theme from "./theme.ts";
 import { PageNotFound } from "./components/PageNotFound.tsx";
-import WithSubnavigation from "./components/Navbar.tsx";
+import WithSubnavigation from "./components/Navbar/";
 import Landing from "./views/Landing";
 import About from "./views/About";
 import Who from "./views/Who/index.tsx";
+import SidebarWithHeader from "./components/Navbar/DashNav.tsx";
+import Dashboard from "./views/Dashboard/index.tsx";
+import RegisterCard from "./views/Auth/Register.tsx";
+import LoginCard from "./views/Auth/Login.tsx";
+import Projects from "./views/Dashboard/Projects/index.tsx";
+import Tasks from "./views/Dashboard/Projects/Tasks.tsx";
 
 export const Layout = () => {
   return (
     <>
       <WithSubnavigation />
       <Outlet />
+    </>
+  );
+};
+
+export const DashLayout = () => {
+  return (
+    <>
+      <SidebarWithHeader>
+        <div
+          style={{
+            display: "flex",
+            padding: "2rem",
+            justifyContent: "center",
+            width: "100%",
+          }}
+        >
+          <Outlet />
+        </div>
+      </SidebarWithHeader>
     </>
   );
 };
@@ -36,6 +61,36 @@ const router = createBrowserRouter([
         element: <Who />,
       },
     ],
+    errorElement: <PageNotFound />,
+  },
+  {
+    path: "/dashboard",
+    element: <DashLayout />,
+    children: [
+      {
+        path: "/dashboard",
+        element: <Dashboard />,
+      },
+      {
+        path: "projects",
+        element: <Projects />,
+      },
+      {
+        path: "projects/:projectName",
+        element: <Tasks />,
+      },
+    ],
+
+    errorElement: <PageNotFound />,
+  },
+  {
+    path: "/register",
+    element: <RegisterCard />,
+    errorElement: <PageNotFound />,
+  },
+  {
+    path: "/login",
+    element: <LoginCard />,
     errorElement: <PageNotFound />,
   },
 ]);
