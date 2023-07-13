@@ -10,6 +10,7 @@ import {
   Icon,
   useBreakpointValue,
 } from "@chakra-ui/react";
+import { Link as RouterLink } from "react-router-dom";
 import { ChevronDownIcon } from "@chakra-ui/icons";
 import { useNavigate } from "react-router-dom";
 
@@ -44,15 +45,14 @@ export const Hero: React.FC = () => {
         </Text>
         <Stack spacing={6} direction={"row"}>
           <Button
+            as={RouterLink}
             colorScheme="orange"
             rounded={"full"}
             px={6}
             _hover={{ bg: "orange.500 " }}
-            onClick={() => {
-              navigate("/about");
-            }}
+            to={"/register"}
           >
-            Learn more
+            Sign Up!
           </Button>
         </Stack>
         <Box

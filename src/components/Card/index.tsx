@@ -13,6 +13,7 @@ import { motion } from "framer-motion";
 
 interface CardProps extends FlexProps {
   children: React.ReactNode;
+  ref?: (element: HTMLElement | null) => void;
 }
 
 export const Card: React.FC<CardProps> = ({ children, ...rest }) => {
@@ -20,7 +21,7 @@ export const Card: React.FC<CardProps> = ({ children, ...rest }) => {
     <Flex
       as={motion.div}
       whileHover={{
-        y: -10,
+        y: -5,
         transition: { duration: 0.3 },
       }}
       direction={"column"}
@@ -55,7 +56,7 @@ export const CardHeader: React.FC<CardHeaderProps> = ({
       textUnderlineOffset={8}
       {...rest}
     >
-      {...children}
+      {children}
     </Heading>
   );
 };
@@ -101,7 +102,7 @@ export const CardFooter: React.FC<CardFooterProps> = ({
       px={3}
       {...rest}
     >
-      <Text>ID: {unitId}</Text>
+      <Text fontSize={"xs"}>ID: {unitId}</Text>
       {children}
     </HStack>
   );

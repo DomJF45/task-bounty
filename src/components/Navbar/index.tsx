@@ -11,6 +11,7 @@ import {
   PopoverTrigger,
   PopoverContent,
   Image,
+  Button,
   useColorModeValue,
   useBreakpointValue,
   useDisclosure,
@@ -21,7 +22,7 @@ import {
   ChevronDownIcon,
   ChevronRightIcon,
 } from "@chakra-ui/icons";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link as RouterLink } from "react-router-dom";
 
 export default function WithSubnavigation() {
   const { isOpen, onToggle } = useDisclosure();
@@ -77,6 +78,39 @@ export default function WithSubnavigation() {
           >
             <DesktopNav />
           </Flex>
+        </Flex>
+        <Flex>
+          <Stack
+            flex={{ base: 1, md: 0 }}
+            justify={"flex-end"}
+            direction={"row"}
+            spacing={6}
+          >
+            <Button
+              as={RouterLink}
+              to={"/login"}
+              fontSize={"sm"}
+              fontWeight={400}
+              variant={"link"}
+              href={"#"}
+            >
+              Sign In
+            </Button>
+            <Button
+              as={RouterLink}
+              display={{ base: "none", md: "inline-flex" }}
+              fontSize={"sm"}
+              fontWeight={600}
+              color={"white"}
+              bg={"orange.400"}
+              to={"/register"}
+              _hover={{
+                bg: "orange.300",
+              }}
+            >
+              Sign Up
+            </Button>
+          </Stack>
         </Flex>
       </Flex>
 

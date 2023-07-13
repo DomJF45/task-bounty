@@ -14,6 +14,9 @@ import RegisterCard from "./views/Auth/Register.tsx";
 import LoginCard from "./views/Auth/Login.tsx";
 import Projects from "./views/Dashboard/Projects/index.tsx";
 import Tasks from "./views/Dashboard/Projects/Tasks.tsx";
+import { Provider } from "react-redux";
+import { store } from "./app/store.ts";
+import { UserProtect } from "./components/Protect/UserProtect.tsx";
 
 export const Layout = () => {
   return (
@@ -27,18 +30,11 @@ export const Layout = () => {
 export const DashLayout = () => {
   return (
     <>
-      <SidebarWithHeader>
-        <div
-          style={{
-            display: "flex",
-            padding: "2rem",
-            justifyContent: "center",
-            width: "100%",
-          }}
-        >
+      <UserProtect>
+        <SidebarWithHeader>
           <Outlet />
-        </div>
-      </SidebarWithHeader>
+        </SidebarWithHeader>
+      </UserProtect>
     </>
   );
 };
@@ -76,7 +72,7 @@ const router = createBrowserRouter([
         element: <Projects />,
       },
       {
-        path: "projects/:projectName",
+        path: "projects/:projectId",
         element: <Tasks />,
       },
     ],
@@ -99,7 +95,9 @@ ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <React.StrictMode>
     <ChakraProvider theme={theme}>
       <ColorModeScript initialColorMode={theme.config.initialColorMode} />
-      <RouterProvider router={router} />
+      <Provider store={store}>
+        <RouterProvider router={router} />
+      </Provider>
     </ChakraProvider>
   </React.StrictMode>
 );

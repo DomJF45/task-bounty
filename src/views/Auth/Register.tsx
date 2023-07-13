@@ -14,6 +14,7 @@ import {
   useColorModeValue,
   Link,
 } from "@chakra-ui/react";
+import { Link as RouterLink } from "react-router-dom";
 import { useState } from "react";
 import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
 
@@ -33,7 +34,7 @@ export default function RegisterCard() {
             Sign up
           </Heading>
           <Text fontSize={"lg"} color={"gray.600"}>
-            to enjoy all of our cool features ✌️
+            to start earning within your company 🔥
           </Text>
         </Stack>
         <Box
@@ -92,7 +93,10 @@ export default function RegisterCard() {
             </Stack>
             <Stack pt={6}>
               <Text align={"center"}>
-                Already a user? <Link color={"orange.400"}>Login</Link>
+                Already a user?{" "}
+                <Link as={RouterLink} to={"/login"} color={"orange.400"}>
+                  Login
+                </Link>
               </Text>
             </Stack>
           </Stack>

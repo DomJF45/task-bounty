@@ -4,7 +4,6 @@ const Dashboard = () => {
   return (
     <Box>
       <Heading>Dashboard</Heading>
-      <Flex p={5} justifyContent={"center"}></Flex>
     </Box>
   );
 };
