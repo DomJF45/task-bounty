@@ -35,12 +35,15 @@ import { GoTasklist } from "react-icons/go";
 import { IconType } from "react-icons";
 import { ReactText } from "react";
 import { Link as RouterLink } from "react-router-dom";
+import { useAppDispatch, useAppSelector } from "../../app/hooks";
+import { logout } from "../../features/userSlice";
 
 interface LinkItemProps {
   name: string;
   icon: IconType;
   src: string;
 }
+
 const LinkItems: Array<LinkItemProps> = [
   { name: "Home", icon: FiHome, src: "/dashboard" },
   { name: "Projects", icon: FiTrendingUp, src: "projects" },
@@ -55,6 +58,7 @@ export default function SidebarWithHeader({
   children: ReactNode;
 }) {
   const { isOpen, onOpen, onClose } = useDisclosure();
+
   return (
     <Box minH="100vh" bg={useColorModeValue("gray.100", "gray.900")}>
       <SidebarContent
@@ -163,6 +167,13 @@ interface MobileProps extends FlexProps {
   onOpen: () => void;
 }
 const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
+  const dispatch = useAppDispatch();
+  const { user } = useAppSelector((state) => state.user);
+
+  function handleLogOut() {
+    dispatch(logout());
+  }
+
   return (
     <Flex
       ml={{ base: 0, md: 60 }}
@@ -239,7 +250,7 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
               <MenuItem>Settings</MenuItem>
               <MenuItem>Billing</MenuItem>
               <MenuDivider />
-              <MenuItem>Sign out</MenuItem>
+              <MenuItem onClick={handleLogOut}>Sign out</MenuItem>
             </MenuList>
           </Menu>
         </Flex>
