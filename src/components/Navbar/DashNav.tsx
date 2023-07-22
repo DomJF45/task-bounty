@@ -221,10 +221,9 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
             >
               <HStack>
                 <Avatar
+                  name={user?.firstName + " " + user?.lastName}
                   size={"sm"}
-                  src={
-                    "https://images.unsplash.com/photo-1619946794135-5bc917a27793?ixlib=rb-0.3.5&q=80&fm=jpg&crop=faces&fit=crop&h=200&w=200&s=b616b2c5b373a80ffc9636ba24f7a4a9"
-                  }
+                  src={user?.icon}
                 />
                 <VStack
                   display={{ base: "none", md: "flex" }}
@@ -232,9 +231,11 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
                   spacing="1px"
                   ml="2"
                 >
-                  <Text fontSize="sm">{"Jane Doe"}</Text>
+                  <Text fontSize="sm">
+                    {user?.firstName + " " + user?.lastName}
+                  </Text>
                   <Text fontSize="xs" color="gray.600">
-                    {"Manager (PM)"}
+                    {user?.title}
                   </Text>
                 </VStack>
                 <Box display={{ base: "none", md: "flex" }}>

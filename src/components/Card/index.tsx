@@ -7,7 +7,8 @@ import {
   Heading,
   HeadingProps,
   StackProps,
-  Text,
+  Tag,
+  Tooltip,
 } from "@chakra-ui/react";
 import { motion } from "framer-motion";
 
@@ -20,10 +21,6 @@ export const Card: React.FC<CardProps> = ({ children, ...rest }) => {
   return (
     <Flex
       as={motion.div}
-      whileHover={{
-        y: -5,
-        transition: { duration: 0.3 },
-      }}
       direction={"column"}
       width={350}
       height={"275px"}
@@ -33,6 +30,9 @@ export const Card: React.FC<CardProps> = ({ children, ...rest }) => {
       backgroundColor={"white"}
       boxShadow={"md"}
       {...rest}
+      whileHover={{
+        y: -5,
+      }}
     >
       {children}
     </Flex>
@@ -84,7 +84,7 @@ export const CardBody: React.FC<CardBodyProps> = ({ children, ...rest }) => {
 
 interface CardFooterProps extends StackProps {
   children: React.ReactNode;
-  unitId: number;
+  unitId: string;
 }
 
 export const CardFooter: React.FC<CardFooterProps> = ({
@@ -102,7 +102,20 @@ export const CardFooter: React.FC<CardFooterProps> = ({
       px={3}
       {...rest}
     >
-      <Text fontSize={"xs"}>ID: {unitId}</Text>
+      <Tooltip label={unitId}>
+        <Tag
+          fontSize={"xs"}
+          backgroundColor={"gray.100"}
+          textOverflow={"ellipsis"}
+          wordBreak={"break-word"}
+          overflow={"hidden"}
+          whiteSpace={"nowrap"}
+          maxW={"100px"}
+          borderRadius={"5px"}
+        >
+          ID: {unitId}
+        </Tag>
+      </Tooltip>
       {children}
     </HStack>
   );

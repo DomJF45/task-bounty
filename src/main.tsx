@@ -17,6 +17,7 @@ import Tasks from "./views/Dashboard/Projects/Tasks.tsx";
 import { Provider } from "react-redux";
 import { store } from "./app/store.ts";
 import { UserProtect } from "./components/Protect/UserProtect.tsx";
+import TasksPage from "./views/Dashboard/Tasks/index.tsx";
 
 export const Layout = () => {
   return (
@@ -74,6 +75,10 @@ const router = createBrowserRouter([
       {
         path: "projects/:projectId",
         element: <Tasks />,
+      },
+      {
+        path: "tasks",
+        element: <TasksPage />,
       },
     ],
 

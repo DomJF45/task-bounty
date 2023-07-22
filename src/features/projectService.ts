@@ -1,64 +1,104 @@
-import { createAsyncThunk } from "@reduxjs/toolkit";
-import { dataBase, iProject, iStatusColumn } from "../data/dataBase";
+import { iTask } from "../data/dataBase";
+import axios from "axios";
+import { getTokenFromLocalStorage } from "../utils/getUserFromLocalStorage";
 
-type ProjectError = {
-  message: string;
+const URL = "http://localhost:8080";
+
+const getUserProjects = async (token: string) => {
+  console.log(token);
+  const response = await axios.get(URL + "/projects", {
+    headers: {
+      Authorization: "Bearer " + token,
+    },
+  });
+  if (response.data) {
+    console.log(response.data.data);
+    return response.data.data.data;
+  }
 };
 
-const getUserProjects = createAsyncThunk<
-  iProject[],
-  string,
-  {
-    rejectValue: ProjectError;
-  }
->("user/projects", async (userId, thunkAPI) => {
-  const response = await new Promise<iProject[]>((resolve) => {
-    //const user = getUserFromLocalStorage();
-    setTimeout(() => {
-      if (dataBase.projects !== undefined) {
-        resolve(
-          dataBase.projects.filter((project: iProject) => {
-            if (project) {
-              return project.projectManager.id === userId;
-            }
-          })
-        );
-      }
-    }, 1000);
-  });
-  if (!response) {
-    thunkAPI.rejectWithValue({
-      message: "Could Not Get Projects",
-    });
-    return [];
-  }
-  return response;
-});
-
-const getProjectTasks = createAsyncThunk<
-  iStatusColumn,
-  string,
-  {
-    rejectValue: ProjectError;
-  }
->("user/projects/:projectId/tasks", async (projectId, thunkAPI) => {
-  const response = await new Promise<iStatusColumn>((resolve) => {
-    setTimeout(() => {
-      const projectById = dataBase.projects?.find(
-        (p: iProject) => p.id === projectId
-      );
-      if (projectById) {
-        resolve(projectById.tasks);
-      }
-    }, 1500);
-  });
-  if (!response) {
-    thunkAPI.rejectWithValue({
-      message: "Could not Get Project",
+const addTask = async (data: { projectId: string; task: iTask }) => {
+  const { projectId, task } = data;
+  const token = getTokenFromLocalStorage();
+  if (token !== undefined) {
+    return await axios.post(URL + "/projects/" + projectId + "/tasks", task, {
+      headers: {
+        Authorization: "Bearer " + token,
+      },
     });
   }
-  console.log(response);
-  return response;
-});
+};
 
-export { getUserProjects, getProjectTasks };
+const getTasks = async (projectId: string) => {
+  const token = getTokenFromLocalStorage();
+  if (token !== undefined) {
+    const response = await axios.get(
+      URL + "/projects/" + projectId + "/getTasks",
+      {
+        headers: {
+          Authorization: "Bearer " + token,
+        },
+      }
+    );
+    if (response.data) {
+      return response.data.data.data;
+    }
+  }
+};
+
+const takeProject = async (projectId: string) => {
+  const token = getTokenFromLocalStorage();
+  console.log(token);
+  if (token !== undefined) {
+    await axios.put(
+      URL + "/projects/" + projectId,
+      {},
+      {
+        headers: {
+          Authorization: "Bearer " + getTokenFromLocalStorage(),
+        },
+      }
+    );
+  }
+};
+
+export type newProjectIncoming = {
+  name: string;
+  rank: "S" | "A" | "B" | "C" | "D" | "E" | "F";
+  exp: number;
+};
+
+const addProject = async (project: newProjectIncoming) => {
+  const token = getTokenFromLocalStorage();
+  if (token !== undefined) {
+    await axios.post(URL + "/project", project, {
+      headers: {
+        Authorization: "Bearer " + getTokenFromLocalStorage(),
+      },
+    });
+  }
+};
+
+const getProjectById = async (projectId: string) => {
+  const token = getTokenFromLocalStorage();
+  if (token !== undefined) {
+    const response = await axios.get(URL + "/project/" + projectId, {
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+    });
+    if (response.data.data.data) {
+      return response.data.data.data;
+    }
+  }
+};
+
+const projectService = {
+  getUserProjects,
+  getProjectById,
+  addProject,
+  takeProject,
+  getTasks,
+  addTask,
+};
+export default projectService;

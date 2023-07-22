@@ -1,12 +1,18 @@
-import { iManager, iContributor } from "../data/dataBase";
+import { iUser } from "../data/dataBase";
 
-export default function getUserFromLocalStorage():
-  | iManager
-  | iContributor
-  | undefined {
+export function getUserFromLocalStorage(): iUser | undefined {
   const user = localStorage.getItem("user");
   if (user) {
     return JSON.parse(user);
+  } else {
+    return undefined;
+  }
+}
+
+export function getTokenFromLocalStorage(): string | undefined {
+  const token = localStorage.getItem("token");
+  if (token) {
+    return JSON.parse(token);
   } else {
     return undefined;
   }

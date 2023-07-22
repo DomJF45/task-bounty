@@ -1,45 +1,31 @@
-import { HStack, Icon, Text } from "@chakra-ui/react";
-import { FaCoins, FaCheck } from "react-icons/fa6";
-import { AiOutlineClockCircle } from "react-icons/ai";
-import {} from "react-beautiful-dnd";
-import { CgDanger } from "react-icons/cg";
-import { GrTest } from "react-icons/gr";
-import { Card, CardHeader, CardFooter } from "../../../components/Card";
+import { HStack, Icon, IconButton, Text, useToast } from "@chakra-ui/react";
+import { FaCheck, FaCoins } from "react-icons/fa6";
+import {
+  Card,
+  CardHeader,
+  CardFooter,
+  CardBody,
+} from "../../../components/Card";
 import { iTask } from "../../../data/dataBase";
-import { IconType } from "react-icons";
 
 interface TaskProps {
   task: iTask;
-  columnName: string;
 }
 
-const Task: React.FC<TaskProps> = ({ task, columnName }) => {
-  const iconMap: {
-    [key: string]: {
-      icon: IconType;
-      color: string;
-    };
-  } = {
-    "Not Started": {
-      icon: CgDanger,
-      color: "red.200",
-    },
-    "In Progress": {
-      icon: AiOutlineClockCircle,
-      color: "yellow.300",
-    },
-    "In Review": {
-      icon: GrTest,
-      color: "blue.200",
-    },
-    Complete: {
-      icon: FaCheck,
-      color: "green.200",
-    },
+const Task: React.FC<TaskProps> = ({ task }) => {
+  const toast = useToast();
+
+  const handleComplete = () => {
+    toast({
+      status: "success",
+      title: "Task Completed!",
+      isClosable: true,
+      position: "bottom-right",
+    });
   };
 
   return (
-    <Card width={"100%"} height={90} borderRadius={"5px"}>
+    <Card width={"400px"} height={"100%"} borderRadius={"5px"}>
       <HStack justifyContent={"space-between"}>
         <CardHeader
           fontSize={"sm"}
@@ -55,16 +41,23 @@ const Task: React.FC<TaskProps> = ({ task, columnName }) => {
         >
           <HStack>
             <Icon as={FaCoins} color={"orange.400"} />
-            <Text as={"span"}>{task.yeild}</Text>
+            <Text as={"span"}>{task.expYield}</Text>
           </HStack>
         </CardHeader>
       </HStack>
-      <CardFooter unitId={+task.id}>
-        <Icon
-          as={iconMap[columnName].icon}
-          color={iconMap[columnName].color}
-          size={20}
-        />
+      <CardBody
+        minHeight={"100px"}
+        height={"100%"}
+        alignItems={"start"}
+        justifyContent={"start"}
+        py={5}
+      >
+        <Text textAlign={"start"}>{task.content}</Text>
+      </CardBody>
+      <CardFooter unitId={task.id}>
+        <IconButton aria-label="drop-down" size={"sm"} onClick={handleComplete}>
+          <Icon as={FaCheck} size={15} />
+        </IconButton>
       </CardFooter>
     </Card>
   );

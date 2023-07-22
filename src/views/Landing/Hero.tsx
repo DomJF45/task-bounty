@@ -12,10 +12,8 @@ import {
 } from "@chakra-ui/react";
 import { Link as RouterLink } from "react-router-dom";
 import { ChevronDownIcon } from "@chakra-ui/icons";
-import { useNavigate } from "react-router-dom";
 
 export const Hero: React.FC = () => {
-  const navigate = useNavigate();
   const breakpoint = useBreakpointValue({ base: 700, md: 1000 });
 
   return (

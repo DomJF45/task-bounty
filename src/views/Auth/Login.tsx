@@ -16,11 +16,12 @@ import {
   Spinner,
 } from "@chakra-ui/react";
 import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
-import { useEffect, useState } from "react";
-import { reset } from "../../features/userSlice";
-import { login } from "../../features/userService";
+import { useEffect, useState, useCallback } from "react";
+import { getUser, reset } from "../../features/userSlice";
+import { login } from "../../features/userSlice";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import { useNavigate, Link as RouterLink } from "react-router-dom";
+import { getTokenFromLocalStorage } from "../../utils/getUserFromLocalStorage";
 
 export default function LoginCard() {
   const dispatch = useAppDispatch();
@@ -50,15 +51,30 @@ export default function LoginCard() {
     }
   };
 
+  const fetchUserData = useCallback(async () => {
+    try {
+      const token = getTokenFromLocalStorage();
+      if (token !== undefined) {
+        await dispatch(getUser(token));
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }, [dispatch]);
+
   useEffect(() => {
     if (success) {
-      toast({
-        status: "success",
-        title: "Logged In!",
-        position: "bottom-right",
-        isClosable: true,
-      });
-      navigate("/dashboard");
+      dispatch(reset());
+      fetchUserData();
+      if (success && user) {
+        toast({
+          status: "success",
+          title: "Logged In!",
+          position: "bottom-right",
+          isClosable: true,
+        });
+        navigate("/dashboard");
+      }
     }
 
     if (error) {
@@ -73,7 +89,7 @@ export default function LoginCard() {
     return () => {
       dispatch(reset());
     };
-  }, [error, toast, success, navigate, dispatch]);
+  }, [error, toast, success, navigate, dispatch, fetchUserData, user]);
 
   console.log("render");
 
