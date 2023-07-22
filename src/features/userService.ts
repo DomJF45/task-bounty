@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const URL = "http://localhost:8080";
+const URL = "https://task-bounty.fly.dev";
 
 const login = async (userData: { email: string; password: string }) => {
   const response = await axios.post(URL + "/user/login", userData);

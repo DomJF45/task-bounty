@@ -2,7 +2,7 @@ import { iTask } from "../data/dataBase";
 import axios from "axios";
 import { getTokenFromLocalStorage } from "../utils/getUserFromLocalStorage";
 
-const URL = "http://localhost:8080";
+const URL = "https://task-bounty.fly.dev";
 
 const getUserProjects = async (token: string) => {
   console.log(token);
